@@ -15,7 +15,7 @@ class App extends Component {
       <div className="App">
         <h1>React Storybook</h1>
         <hr />
-        <KTopbar>kkkkkk</KTopbar>
+        <KTopbar title="kkkkkk"></KTopbar>
       </div>
     );
   }

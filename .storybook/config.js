@@ -1,13 +1,8 @@
 import { configure } from '@storybook/react';
-import { configure as configureViewport, INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-
-console.log(configureViewport)
+import { configure as configureViewport } from '@storybook/addon-viewport';
 
 configureViewport({
-  viewports: {
-    INITIAL_VIEWPORTS
-  },
-  defaultViewport: 'iphone6'
+  defaultViewport: 'iphone6p'
 });
 
 function loadStories() {

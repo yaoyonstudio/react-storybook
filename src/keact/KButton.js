@@ -10,17 +10,34 @@ class KButton extends Component {
       color: #d33;
       cursor: pointer;
       display: inline-block;
-      padding: .5rem 0;
+      height: 44px;
       width: 10rem;
       box-sizing: border-box;
 
-      &:hover {
-        color: #fff;
-        background-color: #d33 !important;
-      }
+      ${props => this.props.full && css`}
+        width: 100%;
+      `}
+
+      ${props => this.props.height && css`}
+        height: ${this.props.height}
+      `}
+
+
+      ${props => this.props.hover && css`}
+        &:hover {
+          color: #fff;
+          background-color: #d33 !important;
+        }
+      `}
 
       ${props => this.props.primary && css`
         background-color: #d33;
+        color: #fff;
+      `}
+
+      ${props => this.props.disabled && css`
+        background-color: #bbb;
+        border-color: #bbb;
         color: #fff;
       `}
 
@@ -31,7 +48,7 @@ class KButton extends Component {
       `}
     `
     return (
-      <Button onClick={this.props.onClick}>{this.props.children}</Button>
+      <Button disabled={this.props.disabled ? 'disabled' : false} onClick={this.props.onClick}>{this.props.children}</Button>
     );
   }
 }
