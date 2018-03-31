@@ -25,17 +25,25 @@ const groupBy = (arr, group) => {
   return dest
 }
 
+const arraySort = (arr, group) => {
+  return arr.sort((a, b) => {
+    let v1 = a[group]
+    let v2 = b[group]
+    return v1 - v2
+  })
+}
+
+
 class KListMenu extends Component {
   render() {
     const _data = groupBy(this.props.data, 'group')
-    console.log(_data)
-
     const Nav = styled.nav`
       ul {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         width: 100%;
+        margin-bottom: 10px;
       }
 
       li {
@@ -77,9 +85,12 @@ class KListMenu extends Component {
         flex: 1;
       }
 
-      ${props => this.props.color && css`}
-        p {
-          color: ${this.props.color}
+      ${props => this.props.arrow && css`}
+        a {
+          background-image: url(${this.props.icon ? this.props.icon : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAaCAMAAACJtiw1AAAAPFBMVEVHcEyZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZk8cDR0AAAAE3RSTlMAc5jT6Ls0BB8P9p/0VNY9K4BSh7ipnQAAAGNJREFUGNN9kUcOwEAIA7f3ksT//2vOdqLlOBIMYJMvw3WjZwJ7IFYiKcAXIsUjJCI1oj1EsgMsuyzgWDabyvZXtn5kw9Kg3AF3AtqiQ/VGXUxW1+NqRJuHB6WAVU5P/sSgQb1TTQUA1OHBAQAAAABJRU5ErkJggg=='});
+          background-repeat: no-repeat;
+          background-position: right center;
+          background-size: auto 16px;
         }
       `}
 
@@ -92,26 +103,25 @@ class KListMenu extends Component {
           color: ${this.props.acolor} !important;
         }
       `}
-    `
-    return (
+  `
+  return (
       <Nav>
-        <ul>
-          {_data.map(section => {
-            if (section.data && section.data.length) {
-              section.data.map((item, index) => {
-                console.log(item)
+        {_data.map((section, index) => {
+          return (
+            <ul key={index}>
+              {section.data.map((item, i) => {
                 return (
-                  <li key={index}>
+                  <li key={i}>
                     <a href={item.link}>
                       {item.icon && <span><img src={item.icon} alt={item.title} /></span>}
                       <p>{item.title}</p>
                     </a>
                   </li>
                 )
-              })
-            }
-          })}
-        </ul>
+              })}
+            </ul>
+          )
+        })}
       </Nav>
     );
   }
