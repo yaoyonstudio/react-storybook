@@ -2,33 +2,58 @@ import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 
 class KPagination extends Component {
-  render() {
-    let pageItems = []
-    let pageCount = 1
-    let currentPage = 1
+  constructor (props) {
+    super(props)
+    this.pageItems = []
+    this.pageCount = 1
+    this.currentPage = 1
 
     if (this.props.count < this.props.pagesize) {
-      pageItems.push(1)
-      pageCount = 1
+      this.pageItems.push(1)
+      this.pageCount = 1
     } else {
-      pageCount = Math.ceil(this.props.count / this.props.pagesize)
-      if (pageCount <= this.props.showpages) {
-        for (let i = 0, l = pageCount; i < l; i++) {
-          pageItems.push(i + 1)
+      this.pageCount = Math.ceil(this.props.count / this.props.pagesize)
+      if (this.pageCount <= this.props.showpages) {
+        for (let i = 0, l = this.pageCount; i < l; i++) {
+          this.pageItems.push(i + 1)
         }
       } else {
         for (let i = 0; i < this.props.showpages; i++) {
-          pageItems.push(i + 1)
+          this.pageItems.push(i + 1)
         }
       }
     }
 
     if (this.props.page < 1) {
-      currentPage = 1
+      this.currentPage = 1
     } else if (this.props.page > this.props.pageCount) {
-      currentPage = pageCount
+      this.currentPage = pageCount
     } else {
-      currentPage = this.props.page
+      this.currentPage = this.props.page
+    }
+  }
+
+  shouldComponentUpdate (nextProps, nextState) {
+    console.log(nextProps.page)
+    console.log(this.currentPage)
+    this.currentPage = nextProps.page
+    return true
+  }
+  
+  // componentDidUpdate (prevProps, prevState, snapshot) {
+  //   console.log(prevProps)
+  // }
+
+
+  render() {
+    
+
+    const prev = () => {
+      console.log('prev')
+    }
+    
+    const next = () => {
+      console.log('next')
     }
 
     const Div = styled.div`
@@ -75,6 +100,11 @@ class KPagination extends Component {
         }
       }
 
+      .disabled {
+        background-color: #eee;
+        color: #999;
+      }
+
       ${props => this.props.width && css`}
         width: ${this.props.width}
       `}
@@ -99,13 +129,13 @@ class KPagination extends Component {
     return (
       <Div>
         <ul>
-          <li className="prev">{this.props.prev ? this.props.prev : ' < '}</li>
-          {pageItems.map((item, index) => {
+          <li onClick={() => prev()} page={this.currentPage == 1 ? '' : this.currentPage - 1} className={'prev ' + (this.currentPage == 1 ? 'disabled' : '')}>{this.props.prev ? this.props.prev : ' < '}</li>
+          {this.pageItems.map((item, index) => {
             return (
               <li key={index} className={this.props.page == item ? 'current' : ''}><a page={item} onClick={this.props.href}>{item}</a></li>
             )
           })}
-          <li className="next">{this.props.next ? this.props.next : ' > '}</li>
+          <li onClick={() => next()} page={this.currentPage == this.pageCount ? '' : this.currentPage + 1} className={'next ' + (this.currentPage == this.pageCount ? 'disabled' : '')}>{this.props.next ? this.props.next : ' > '}</li>
         </ul>
       </Div>
     );
