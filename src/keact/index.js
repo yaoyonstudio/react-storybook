@@ -7,6 +7,8 @@ import KUpload from './KUpload'
 import KListItem from './KListItem'
 import KCard from './KCard'
 import KPagination from './KPagination'
+import KSwiper from './KSwiper'
+
 
 export { 
   KButton,
@@ -17,7 +19,8 @@ export {
   KUpload,
   KListItem,
   KCard,
-  KPagination
+  KPagination,
+  KSwiper
 }
 
 

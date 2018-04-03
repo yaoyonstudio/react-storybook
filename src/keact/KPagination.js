@@ -27,33 +27,28 @@ class KPagination extends Component {
     if (this.props.page < 1) {
       this.currentPage = 1
     } else if (this.props.page > this.props.pageCount) {
-      this.currentPage = pageCount
+      this.currentPage = this.pageCount
     } else {
       this.currentPage = this.props.page
     }
   }
 
-  shouldComponentUpdate (nextProps, nextState) {
-    console.log(nextProps.page)
-    console.log(this.currentPage)
-    this.currentPage = nextProps.page
-    return true
-  }
-  
-  // componentDidUpdate (prevProps, prevState, snapshot) {
-  //   console.log(prevProps)
-  // }
-
-
   render() {
     
-
     const prev = () => {
-      console.log('prev')
+      if (this.props.page <= 1) {
+        return
+      } else {
+        this.props.href(this.props.page - 1)
+      }
     }
     
     const next = () => {
-      console.log('next')
+      if (this.props.page == this.pageCount) {
+        return
+      } else {
+        this.props.href(this.props.page + 1)
+      }
     }
 
     const Div = styled.div`

@@ -203,9 +203,13 @@ const pageInfo = {
   prev: '上一页',
   next: '下一页'
 }
-const hrefTo = (e) => {
-  console.log(parseInt(e.target.getAttribute('page'), 10))
-  pageInfo.page = parseInt(e.target.getAttribute('page'), 10)
+const hrefTo = (value) => {
+  console.log(value)
+  if (typeof value == 'number') {
+    pageInfo.page = value
+  } else {
+    pageInfo.page = parseInt(value.target.getAttribute('page'), 10)
+  }
 }
 storiesOf('KPagination', module)
   .addDecorator(withKnobs)
